@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistem Deteksi Stunting</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+    <div class="container contact-form">
+        <div class="contact-image">
+            <img src="{{ url_for('static', filename='img/stunting.png') }}" alt="rocket_contact"/>
+        </div>
+        <form action="{{ url_for('predict') }}" method="post" class="needs-validation" novalidate>
+            <h3 class="center-text">Deteksi Stunting</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" name="Tinggi_Badan_(cm)" class="form-control" placeholder="Tinggi Badan (cm)" required />
+                        <div class="invalid-feedback">Tinggi badan harus diisi.</div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="Umur_(bulan)" class="form-control" placeholder="Umur (bulan)" required />
+                        <div class="invalid-feedback">Umur harus diisi.</div>
+                    </div>
+                    <div class="form-group">
+                        <select name="Jenis_Kelamin_(laki-laki/perempuan)" class="form-control" required>
+                            <option value="" disabled selected hidden>Pilih Jenis Kelamin</option>
+                            <option value="laki-laki">Laki-laki</option>
+                            <option value="perempuan">Perempuan</option>
+                        </select>
+                        <div class="invalid-feedback">Jenis kelamin harus dipilih.</div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btnContact">Deteksi</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="center-text">Hasil Deteksi</h3>
+                    <h3 class="center-text">{{ prediction_text }}</h3>
+                    <p class="center-text recommendation">{{ recommendation }}</p>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script>
+        // Client-side form validation
+        (function () {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+</body>
+</html>
